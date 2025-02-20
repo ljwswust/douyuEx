@@ -6,7 +6,6 @@ let css = "";
 let js = "";
 
 function handleFolder(folderPath, excludingFileName) {
-  // 读取文件夹中的所有文件和子文件夹
   fs.readdirSync(folderPath).forEach((item) => {
     const itemPath = path.join(folderPath, item);
     if (fs.statSync(itemPath).isDirectory()) {
@@ -14,8 +13,16 @@ function handleFolder(folderPath, excludingFileName) {
     } else {
       if (item !== excludingFileName) {
         const fileContent = fs.readFileSync(itemPath, "utf8");
-        if (item.includes(".css")) css += fileContent + "\r\n";
-        if (item.includes(".js")) js += fileContent + "\r\n";
+        // 获取相对于src的路径
+        const relativePath = path.relative("./src", itemPath);
+        if (item.includes(".css")) {
+          css += fileContent + "\r\n";
+        }
+        if (item.includes(".js")) {
+          // 添加文件注释
+          js += `\n\n/* ======================= src/${relativePath} ======================= */\n`;
+          js += fileContent + "\r\n";
+        }
       }
     }
   });

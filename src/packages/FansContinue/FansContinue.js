@@ -18,7 +18,7 @@ function FansContinue_insertIcon() {
 
 function initPkg_FansContinue_Func() {
 	document.getElementsByClassName("fans-continue")[0].addEventListener("click", function() {
-		let sendNum = prompt("每个直播间赠送几根荧光棒？", "1");
+		let sendNum = prompt("大哥，每个直播间赠送几根荧光棒？", "1");
 		if (sendNum == null) {
 			return;
 		}
